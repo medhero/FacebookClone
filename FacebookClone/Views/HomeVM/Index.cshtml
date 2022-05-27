@@ -1,0 +1,110 @@
+﻿@model FacebookClone.Models.Account.HomeViewModel
+
+@{
+    ViewBag.Title = "Home";
+}
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 col-md-8 ">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Create Post</h5>
+                </div>
+                @using (Html.BeginForm("Create", "HomeVM", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                 {
+                    @Html.AntiForgeryToken()
+            <div class="card-body">
+                @Html.EditorFor(model => model.Content, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
+
+
+                <span class="d-block text-right mt-3 pb-2">
+                    <label>
+                        <input type="file" name="ImageFile" style="display: none;">
+                        <a style="color: dodgerblue" class="pr-3"><i class="fal fa-image pr-2"></i>Photo</a>
+                    </label>
+
+                    <a href="#"><i class="fal fa-user-tag pr-1"></i>Tag friends</a>
+                </span>
+                <button type="submit" class="btn btn-primary btn-block">Share</button>
+            </div>
+                 }
+            </div>
+
+
+            @foreach (var item in Model.posts)
+             {
+        <div class="my-3 p-3 bg-white rounded shadow border-top">
+                
+            <h5 class="border-bottom pb-2 mb-0">
+
+                <img src="@Url.Content(@Model.Users.FirstOrDefault(x => x.Id == item.UserId).FilePath)" alt="32x32" class="mr-2 rounded" style="width: 32px; height: 32px;" data-holder-rendered="true">
+                @Model.Users.FirstOrDefault(x => x.Id == item.UserId).FirstName @Model.Users.FirstOrDefault(x => x.Id == item.UserId).LastName 
+            </h5>
+            <div class="text-muted pt-3">
+                <p class="pb-3 pt-3 mb-0 small d-block">
+                    <img class="card-img-top" src="@Url.Content(item.FilePath)" alt=" " onerror="doSomething(this)" data-holder-rendered="true" style="width: 100%; display: block;">
+                </p>
+
+                <script>
+                    function doSomething(elem) {
+                        var alt = document.createTextNode(elem.getAttribute('alt'));
+                        elem.parentNode.insertBefore(alt, elem);
+                        elem.parentNode.removeChild(elem);
+                    }
+                </script>
+
+                <p class="pb-3 pt-3 mb-0 small d-block">
+                    <h5>@Html.DisplayFor(modelItem => item.Content)</h5> at @Html.DisplayFor(modelItem => item.CreatedOn) <br />
+
+                </p>
+            </div>
+            @Html.EditorFor(model => model.Content, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
+            <br />
+            <button type="submit" class="btn btn-primary btn-block" onclick="location.href='@Url.Action("AddComment","Posts",new { idPost = item.PostId })'">Comment</button>
+
+
+            <span class="d-block text-right mt-3">
+
+                @Html.ActionLink(" Like", "Like", "Posts", new { id = item.PostId }, new { @class = "fal fa-thumbs-up pr-2" })
+                <a href="#" class="pr-3"><i class="fal fa-thumbs-down pr-2"></i>Dislike</a>
+                <a href="#"><i class="fal fa-share pr-2"></i>Share</a>
+
+            </span>
+
+
+        </div>
+             }
+
+        </div>
+
+        
+        
+
+        <div class="col-sm-12 col-md-4 mb-4">
+            @foreach (var item in Model.Invites)
+            {
+        <h4 class="d-flex justify-content-between align-items-center mb-3">
+            <span class="text-muted">Friend Request</span>
+            <span class="badge badge-secondary badge-pill"></span>
+        </h4>
+            <ul class="list-group mb-3">
+                <li class="list-group-item d-flex justify-content-between lh-condensed">
+                    <div>
+                        <h6 class="my-0">@item.SenderId</h6>
+                        <small class="text-muted">3 mutual friends</small>
+                    </div>
+                    <span class="text-muted">
+                        <button type="button"onclick="location.href='@Url.Action("AcceptRequest","Friends",new { id = item.RequestId })'" class="btn btn-primary btn-sm">Confirm</button>
+                        <button type="button" class="btn btn-secondary btn-sm">Delete</button>
+                    </span>
+                </li>
+            </ul>
+            }
+        </div>
+         
+
+
+    </div>
+</div>

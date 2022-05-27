@@ -1,0 +1,43 @@
+﻿@model FacebookClone.Models.Post
+
+@{
+    ViewBag.Title = "Home";
+}
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 col-md-8 ">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Edite Post</h5>
+                </div>
+                @using (Html.BeginForm("Edit", "Posts", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.PostId)
+
+                    @Html.AntiForgeryToken()
+                    <div class="card-body">
+                        @Html.EditorFor(model => model.Content, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
+
+
+                        <span class="d-block text-right mt-3 pb-2">
+                            <label>
+                                <input type="file" name="ImageFile" style="display: none;">
+                                <a style="color: dodgerblue" class="pr-3"><i class="fal fa-image pr-2"></i>Photo</a>
+                            </label>
+
+                            <a href="#"><i class="fal fa-user-tag pr-1"></i>Tag friends</a>
+                        </span>
+                        <button type="submit" class="btn btn-primary btn-block">Update</button>
+                    </div>
+                }
+            </div>
+
+
+        </div>
+     
+
+
+    </div>
+</div>

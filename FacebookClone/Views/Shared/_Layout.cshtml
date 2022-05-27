@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facebook Clone</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.2.0/css/all.css">
+    <link rel="stylesheet" href="https://static.fontawesome.com/css/fontawesome-app.css">
+</head>
+<body>
+    @Html.Partial("_LoginNavBar")
+    <div class="container main-content">
+        @RenderBody()
+    </div>
+    <footer class="footer bg-dark">
+        <div class="container">
+            <span class="text-muted">&copy; @DateTime.Now.Year - Facebook clone</span>
+        </div>
+    </footer>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

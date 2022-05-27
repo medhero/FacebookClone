@@ -1,0 +1,92 @@
+﻿@model FacebookClone.Models.Account.EditViewModel
+@{
+    ViewBag.Title = "Register";
+}
+
+<div class="container">
+    <link rel="stylesheet" href="~/Scripts/styleProfile.css">
+    <div class="row pt-5">
+        <div class="col-sm-12 col-md-6">
+            <h2 class="pb-5">
+                Connect with friends and the
+                world around you on Facebook Clone.
+            </h2>
+            <p class="d-none d-md-block d-lg-block pb-5">
+                <i class="fal fa-newspaper fa-3x pr-3"></i>
+                <span class="font-weight-bold"> See photos and updates </span>
+                <span class=""> from friends in News Feed. </span>
+            </p>
+            <p class="d-none d-md-block d-lg-block pb-5">
+                <i class="fas fa-bullhorn fa-3x pr-3"></i>
+                <span class="font-weight-bold"> Share what's new </span>
+                <span class=""> in your life on your Timeline. </span>
+            </p>
+            <p class="d-none d-md-block d-lg-block pb-5">
+                <i class="fal fa-project-diagram fa-3x pr-3"></i>
+                <span class="font-weight-bold"> Find more </span>
+                <span class=""> of what you're looking for with Facebook Search. </span>
+            </p>
+
+        </div>
+        <div class="col-sm-12 col-md-6">
+            <h2 class="mb-3">Edit Your Informations</h2>
+            <h5 class="mb-3">It’s free and always will be.</h5>
+            @using (Html.BeginForm("Edit", "Manage", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "Please fix the following errors below", new { @class = "text-danger" })
+        <div class="row form-group">
+            <div class="col-sm-12 col-md-6 mb-3">
+                @Html.LabelFor(m => m.FirstName)
+                @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-sm-12 col-md-6 mb-3">
+                @Html.LabelFor(m => m.LastName)
+                @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.LastName, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="col-sm-12 mb-3">
+                @Html.LabelFor(m => m.Email)
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", type = "email", placeholder = "you@example.com" })
+                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-sm-12 col-md-6 mb-3">
+                @Html.LabelFor(m => m.PhoneNumber)
+                @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control", placeholder = "Phone Number " })
+            </div>
+
+
+
+            <div class="col-sm-12 mb-3">
+                @Html.LabelFor(m => m.Adresse)
+                @Html.TextBoxFor(m => m.Adresse, new { @class = "form-control", placeholder = "Adresse" })
+
+            </div>
+            <div class="col-sm-12 col-md-6 mb-3">
+                @Html.ActionLink("Change your password", "ChangePassword")
+            </div>
+
+            <div class="col-sm-12 mb-3">         
+                    <label>
+                        <input type="file" name="ImageFile" style="display: none;">
+                        <a style="color: dodgerblue" class="pr-3"><i class="fal fa-image pr-2"></i>Photo</a>
+                    </label>
+               
+
+        </div>
+      </div>
+
+
+
+                <hr class="mb-4">
+                <button class="btn btn-primary btn-lg btn-block" type="submit" id="btn_signup">Update</button>
+            }
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+}
